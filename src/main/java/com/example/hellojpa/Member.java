@@ -1,37 +1,38 @@
 package com.example.hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
 @Entity
+@NoArgsConstructor
+@SequenceGenerator(name = "member_seq_generator",
+sequenceName = "member_seq")
 //@Table(name="Member")
 public class Member {
     @Id
-    private long id;
-    private String name;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+    generator = "member_seq_generator")
+    private Long id;
 
-    public Member() {
-    }
+    @Column(name = "name")
+    private String username;
 
-    public Member(long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    private Integer age;
 
-    public long getId() {
-        return id;
-    }
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 
-    public String getName() {
-        return name;
-    }
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Lob
+    private String description;
+
 }

@@ -1,4 +1,4 @@
-package com.example.hellojpa;
+package com.example.jpashop.domain;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,15 +13,12 @@ public class JpaMain {
 
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-        Member member = new Member();
-        member.setUsername("hello");
-        member.setRoleType(RoleType.ADMIN);
-        em.persist(member);
+
 
         tx.commit();
         em.close();
         emf.close();
 
-      
+
     }
 }
