@@ -21,6 +21,10 @@ public class Member {
     @Column(name = "name")
     private String username;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="TEAM_ID") //실제 회원 테이블의 FK와 연결
+    private Team team;
+
     private Integer age;
 
     @Enumerated(EnumType.STRING)
@@ -34,5 +38,11 @@ public class Member {
 
     @Lob
     private String description;
+
+
+    public void setTeam(Team team){
+        this.team = team;
+        team.getMembers().add(this);
+    }
 
 }
