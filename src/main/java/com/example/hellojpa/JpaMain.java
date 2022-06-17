@@ -26,7 +26,6 @@ public class JpaMain {
         em.persist(member);
 
 
-
         Member findMember = em.find(Member.class, member.getId());
         Team team22 = findMember.getTeam();
 
