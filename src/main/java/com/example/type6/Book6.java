@@ -9,4 +9,6 @@ import javax.persistence.Entity;
 public class Book6 extends Item6 {
     private String author;
     private String isbn;
+
+
 }
