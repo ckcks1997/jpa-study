@@ -23,22 +23,5 @@
         </properties>
     </persistence-unit>
 
-    <persistence-unit name="oracle">
-        <properties>
-            <!-- 필수 속성 -->
-            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-            <property name="javax.persistence.jdbc.user" value="kic"/>
-            <property name="javax.persistence.jdbc.password" value="1111"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 
-            <!-- 옵션 -->
-            <!--로그에 sql문 보이는 옵션-->
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.use_sql_comments" value="true"/>
-            <!--자동 테이블 생성-->
-            <property name="hibernate.hbm2ddl.auto" value="create" />
-        </properties>
-    </persistence-unit>
 </persistence>

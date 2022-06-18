@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -27,22 +28,20 @@ public class Member5 {
     @JoinColumn(name="TEAM_ID") //실제 회원 테이블의 FK와 연결
     private Team5 team5;
 
+    @Embedded
+    private Period workPeriod;
 
-    private Integer age;
+    @Embedded
+    private Address homeAddress;
 
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-
-    @Lob
-    private String description;
-
-
+    //같은 임베디드값을 두번 쓰고싶다면..?
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="city", column = @Column(name="WORK_CITY")),
+            @AttributeOverride(name="street", column = @Column(name="WORK_STREET")),
+            @AttributeOverride(name="zipcode", column = @Column(name="WORK_ZIPCODE"))
+    })
+    private Address homeAddress2;
     public void setTeam(Team5 team){
         this.team5 = team;
         team.getMembers5().add(this);
