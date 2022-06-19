@@ -17,7 +17,6 @@ public class Team7 {
     @GeneratedValue
     private Long id;
     private String name;
-    private int age;
 
     @OneToMany(mappedBy = "team7")
     private List<Member7> members7 = new ArrayList<>();
@@ -27,7 +26,7 @@ public class Team7 {
         return "Team7{" +
                 "id=" + id +
                 ", username='" + name + '\'' +
-                ", age=" + age +
+
                 '}';
     }
 }

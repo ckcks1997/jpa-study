@@ -17,7 +17,7 @@ public class JpaMain72 {
 
 
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             Team7 team = new Team7();
             team.setName("team"+i);
             em.persist(team);
@@ -30,7 +30,13 @@ public class JpaMain72 {
 
         }
 
-
+        Team7 ft = em.createQuery("select t from Team7 t where t.name='team1'",Team7.class).getSingleResult();
+        Member7 m = new Member7();
+        m.setUsername("mem11");
+        m.setAge(11);
+        m.setTeam7(ft);
+        m.setMemberType7(MemberType7.ADMIN);
+        em.persist(m);
 
         em.flush();
         em.clear();
@@ -92,8 +98,37 @@ public class JpaMain72 {
             System.out.println();
         }
 
+        query = "select m from Member7 m  "; //이렇게하면 m.team값을 조회할 때 마다 쿼리를 날림(N+1)
+        query = "select m from Member7 m left join fetch m.team7";//join해서 한번에 값 가져옴
+        query = "select count(m) from Member7 m left join m.team7 group by m.team7";//
+        query = "select distinct t from Team7 t join fetch t.members7";//
+
+        //주의: 패치조인은 별칭 되도록 x
+        query = "select  t from Team7 t join fetch t.members7 m";//
 
 
+
+        //List<Member7> result = em.createQuery(query, Member7.class).getResultList();
+        List<Object[]> result = em.createQuery(query).getResultList();
+/*        for (Member7 member7 : result) {
+            System.out.println(member7.getUsername()+" "+member7.getTeam7().getName());
+        } */
+        for (Object member7 : result) {
+            System.out.println(member7);
+           // System.out.println( (Team7)member7+" "+((Team7) member7).getMembers7());
+        }
+
+
+        //네임드 쿼리
+        em.createNamedQuery("Member7.findByUsername", Member7.class)
+                .setParameter("username", "회원1")
+                .getResultList();
+
+        //벌크연산
+        int resultbulk = em.createQuery("update Member7 m set m.age = 20")
+                        .executeUpdate();
+
+        System.out.println("resultbulk="+resultbulk);
 
         tx.commit();
         em.close();
